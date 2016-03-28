@@ -2,7 +2,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: bigEpidemic.Rout 
+target pngtarget pdftarget vtarget acrtarget: burnout.plots.Rout.pdf 
 
 ##################################################################
 
@@ -17,6 +17,8 @@ include stuff.mk
 
 ## Content
 
+burnout.plots.Rout.pdf: burnout.R
+
 Sources += $(wildcard *.R *.csv)
 
 bigEpidemic.Rout: simulate.Rout
@@ -24,6 +26,7 @@ fitSim.Rout: simulate.Rout
 shortPlot.Rout longPlot.Rout: fitSim.Rout
 hiv_plot.Rout: za.csv hiv_sim.Rout
 hiv_sim.Rout: simulate.Rout
+
 %.plots.Rout: %.sim.Rout plots.R
 	$(run-R)
 %.sim.Rout: simulate.Rout deSolve.R %.R
@@ -31,7 +34,12 @@ hiv_sim.Rout: simulate.Rout
 
 ## Crib
 
-%.R %.csv:
+.PRECIOUS: %.csv
+%.csv:
+	/bin/cp /home/dushoff/Dropbox/Downloads/WorkingWiki-export/SIR_model/$@ .
+
+.PRECIOUS: %.R
+%.R:
 	/bin/cp /home/dushoff/Dropbox/Downloads/WorkingWiki-export/SIR_model/$@ .
 
 ######################################################################
