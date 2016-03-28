@@ -2,10 +2,9 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: burnout.plots.Rout.pdf 
+target pngtarget pdftarget vtarget acrtarget: longPlot.Rout 
 
 ##################################################################
-
 
 # make files
 
