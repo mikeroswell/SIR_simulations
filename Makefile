@@ -2,7 +2,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: notarget
+target pngtarget pdftarget vtarget acrtarget: bigEpidemic.Rout 
 
 ##################################################################
 
@@ -17,6 +17,23 @@ include stuff.mk
 
 ## Content
 
+Sources += $(wildcard *.R *.csv)
+
+bigEpidemic.Rout: simulate.Rout
+fitSim.Rout: simulate.Rout
+shortPlot.Rout longPlot.Rout: fitSim.Rout
+hiv_plot.Rout: za.csv hiv_sim.Rout
+hiv_sim.Rout: simulate.Rout
+%.plots.Rout: %.sim.Rout plots.R
+	$(run-R)
+%.sim.Rout: simulate.Rout deSolve.R %.R
+	$(run-R)
+
+## Crib
+
+%.R %.csv:
+	/bin/cp /home/dushoff/Dropbox/Downloads/WorkingWiki-export/SIR_model/$@ .
+
 ######################################################################
 
 ### Makestuff
@@ -27,5 +44,5 @@ include stuff.mk
 -include $(ms)/git.mk
 -include $(ms)/visual.mk
 
-# -include $(ms)/wrapR.mk
+-include $(ms)/wrapR.mk
 # -include $(ms)/oldlatex.mk
