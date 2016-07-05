@@ -2,7 +2,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: zim.prev.Rout 
+target pngtarget pdftarget vtarget acrtarget: live_fit.Rout 
 
 ##################################################################
 
@@ -42,9 +42,12 @@ williams.Rout: williams.R
 %.ws.Rout: williams.Rout %.R
 	$(run-R)
 
-test.ws.Rout: test.R
+test.ws.Rout: williams.Rout test.R
 
 zim.prev.Rout: $(Drop)/HIV_model_data/zim.csv prev.R
+	$(run-R)
+
+live_fit.Rout: test.ws.Rout zim.prev.Rout compPlots.R
 	$(run-R)
 
 ### Makestuff
