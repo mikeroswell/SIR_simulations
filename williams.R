@@ -1,4 +1,6 @@
-library (deSolve)
+
+# 6107
+# 6697
 
 del <- function(time, vars, parms){
 	q <- c(as.list(vars), parms)
@@ -33,4 +35,3 @@ sim <- function(S0=NULL, I0=0.001
 	}))
 }
 
-print(sim())

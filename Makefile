@@ -2,7 +2,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: williams.Rout 
+target pngtarget pdftarget vtarget acrtarget: zim.prev.Rout 
 
 ##################################################################
 
@@ -38,6 +38,14 @@ hiv_sim.Rout: simulate.Rout
 ## Code to replicate Williams fitting experiments for NTU lecture
 
 williams.Rout: williams.R
+
+%.ws.Rout: williams.Rout %.R
+	$(run-R)
+
+test.ws.Rout: test.R
+
+zim.prev.Rout: $(Drop)/HIV_model_data/zim.csv prev.R
+	$(run-R)
 
 ### Makestuff
 
