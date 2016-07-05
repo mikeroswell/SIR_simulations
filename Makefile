@@ -2,7 +2,7 @@
 ### Hooks for the editor to set the default target
 current: target
 
-target pngtarget pdftarget vtarget acrtarget: longPlot.Rout 
+target pngtarget pdftarget vtarget acrtarget: williams.Rout 
 
 ##################################################################
 
@@ -14,7 +14,9 @@ include stuff.mk
 
 ##################################################################
 
-## Content
+## This was built as a stripped-down, robust simulator while at Princeton. I hijacked it for a couple of things and then moved on. It could still be a good engine, with scaling-related helper functions. I think.
+
+## See also SIR_model on some wiki
 
 burnout.plots.Rout.pdf: burnout.R
 
@@ -31,22 +33,13 @@ hiv_sim.Rout: simulate.Rout
 %.sim.Rout: simulate.Rout deSolve.R %.R
 	$(run-R)
 
-## Crib
+##################################################################
 
-.PRECIOUS: %.csv
-%.csv:
-	/bin/cp /home/dushoff/Dropbox/Downloads/WorkingWiki-export/SIR_model/$@ .
+## Code to replicate Williams fitting experiments for NTU lecture
 
-.PRECIOUS: %.R
-%.R:
-	/bin/cp /home/dushoff/Dropbox/Downloads/WorkingWiki-export/SIR_model/$@ .
-
-######################################################################
+williams.Rout: williams.R
 
 ### Makestuff
-
-## Change this name to download a new version of the makestuff directory
-# Makefile: start.makestuff
 
 -include $(ms)/git.mk
 -include $(ms)/visual.mk
