@@ -43,7 +43,8 @@ sim <- function(S0=NULL, I0=0.001
 		inc <- c(NA, cum[-1] - cum[-nrow(sim)])
 		incRate <- inc/timeStep
 		Itot <- rowSums(sim[grep("^I", names(sim))])
-		prev <- Itot/(S+Itot)
+		N <- S+Itot
+		prev <- Itot/N
 	}))
 }
 
