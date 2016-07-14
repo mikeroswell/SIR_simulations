@@ -44,7 +44,7 @@ williams.Rout: williams.R
 
 test.ws.Rout: williams.Rout test.R
 
-zim.prev.Rout: $(Drop)/HIV_model_data/zim.csv prev.R
+zim.prev.Rout: zim.csv prev.R
 	$(run-R)
 
 live_fit.Rout: test.ws.Rout zim.prev.Rout compPlots.R
