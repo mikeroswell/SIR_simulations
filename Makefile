@@ -8,8 +8,8 @@ target pngtarget pdftarget vtarget acrtarget: pulliam.R
 
 # make files
 
-Sources = Makefile .gitignore README.md stuff.mk LICENSE.md
-include stuff.mk
+Sources = Makefile .gitignore README.md sub.mk LICENSE.md
+include sub.mk
 # include $(ms)/perl.def
 
 ##################################################################
