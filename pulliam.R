@@ -1,4 +1,3 @@
-library(ggplot2)
 
 # 6107
 # 6697
@@ -67,15 +66,22 @@ summary(ts)
 
 
 input_files <- c("zim.csv")
+rtargetname <- "zim.prev"
+pdfname <- ".zim.prev.Rout.pdf"
+csvname <- "zim.prev.Rout.csv"
+rdsname <- "zim.prev.Rds"
+pdf(pdfname)
+# End RR preface
 
-theme_set(theme_bw(base_size=20))
+# Generated using wrapR file zim.prev.wrapR.r
+source('prev.R', echo=TRUE)
+# Wrapped output file zim.prev.wrapR.rout
+# Begin RR postscript
+warnings()
+proc.time()
 
-dat <- read.csv(input_files[[1]])
-
-prevPlot <- (
-	ggplot(dat, aes(x=Year, y=Prevalence))
-	+ geom_point()
-)
+# If you see this in your terminal, the R script zim.prev.wrapR.r (or something it called) did not close properly
+save.image(file=".zim.prev.RData")
 
 par(cex=1.6)
 with(ts, plot(time, prev
