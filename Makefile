@@ -1,8 +1,8 @@
 # SIR_simulations
 ### Hooks for the editor to set the default target
-current: target
 
-target pngtarget pdftarget vtarget acrtarget: pulliam.R 
+current: target
+-include target.mk
 
 ##################################################################
 
@@ -53,7 +53,7 @@ live_fit.Rout: test.ws.Rout zim.prev.Rout compPlots.R
 pulliam.R: williams.R test.R zim.prev.wrapR.r compPlots.R
 	$(cat)
 
-### Makestuff
+######################################################################
 
 -include $(ms)/git.mk
 -include $(ms)/visual.mk

@@ -1,4 +1,5 @@
 commit.time
+target.mk
 .*.sw*
 
 *.pdf
