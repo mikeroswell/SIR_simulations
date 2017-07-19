@@ -28,6 +28,10 @@ shortPlot.Rout longPlot.Rout: fitSim.Rout
 hiv_plot.Rout: za.csv hiv_sim.Rout
 hiv_sim.Rout: simulate.Rout
 
+## In haste for Utah
+## Not liking the overall attempt; keep just first pic.
+za_gens.Rout: za.csv hiv_sim.Rout za_gens.R
+
 %.plots.Rout: %.sim.Rout plots.R
 	$(run-R)
 %.sim.Rout: simulate.Rout deSolve.R %.R
