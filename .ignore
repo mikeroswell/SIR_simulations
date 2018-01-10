@@ -4,3 +4,4 @@ target.mk
 .*.sw*
 make.log
 
+.gitignore
