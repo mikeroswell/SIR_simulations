@@ -59,6 +59,14 @@ pulliam.R: williams.R test.R zim.prev.wrapR.r compPlots.R
 
 ######################################################################
 
+## 3SS 
+
+recurrent.plots.Rout: 
+
+fs.Rout: fs.R
+
+######################################################################
+
 -include $(ms)/git.mk
 -include $(ms)/visual.mk
 
