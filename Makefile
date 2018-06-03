@@ -25,8 +25,10 @@ Sources += $(wildcard *.R *.csv)
 bigEpidemic.Rout: simulate.Rout
 fitSim.Rout: simulate.Rout
 shortPlot.Rout longPlot.Rout: fitSim.Rout
-hiv_plot.Rout: za.csv hiv_sim.Rout
+
 hiv_sim.Rout: simulate.Rout
+hiv_plot.Rout: za.csv hiv_sim.Rout
+hiv_generations.Rout: za.csv hiv_sim.Rout hiv_generations.R
 
 ## In haste for Utah
 ## Not liking the overall attempt; keep just first pic.
