@@ -56,6 +56,8 @@ zim.prev.Rout: zim.csv prev.R
 live_fit.Rout: test.ws.Rout zim.prev.Rout compPlots.R
 	$(run-R)
 
+## Weird file made for Juliet; how does Ignore override work?
+Ignore += pulliam.R
 pulliam.R: williams.R test.R zim.prev.wrapR.r compPlots.R
 	$(cat)
 
