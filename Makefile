@@ -1,20 +1,15 @@
-# SIR_simulations
-### Hooks for the editor to set the default target
+# , a screens project directory
+## makestuff/project.Makefile
 
 current: target
 -include target.mk
 
-##################################################################
+# include makestuff/perl.def
 
-# make files
+######################################################################
 
-Sources = Makefile .ignore README.md sub.mk LICENSE.md
-include sub.mk
-# include $(ms)/perl.def
 
-##################################################################
-
-## This was built as a stripped-down, robust simulator while at Princeton. I hijacked it for a couple of things and then moved on. It could still be a good engine, with scaling-related helper functions. I think.
+## This was built as a stripped-down, robust simulator while at Princeton (Wilton sojourn). I hijacked it for a couple of things and then moved on. It could still be a good engine, with scaling-related helper functions. I think.
 
 ## See also SIR_model on some wiki
 
@@ -71,8 +66,26 @@ fs.Rout: fs.R
 
 ######################################################################
 
--include $(ms)/git.mk
--include $(ms)/visual.mk
+vim_session:
+	bash -cl "vmt"
 
--include $(ms)/wrapR.mk
-# -include $(ms)/oldlatex.mk
+######################################################################
+
+### Makestuff
+
+Sources += Makefile
+
+Ignore += makestuff
+msrepo = https://github.com/dushoff
+Makefile: makestuff/Makefile
+makestuff/Makefile:
+	git clone $(msrepo)/makestuff
+	ls $@
+
+-include makestuff/os.mk
+-include makestuff/wrapR.mk
+-include makestuff/git.mk
+-include makestuff/visual.mk
+-include makestuff/projdir.mk
+
+##################################################################
