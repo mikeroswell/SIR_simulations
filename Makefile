@@ -18,7 +18,7 @@ Sources += $(wildcard *.R *.csv)
 
 bigEpidemic.Rout: simulate.Rout
 fitSim.Rout: simulate.Rout
-shortPlot.Rout longPlot.Rout: fitSim.Rout
+longPlot.Rout: fitSim.Rout
 
 hiv_sim.Rout: simulate.Rout
 hiv_plot.Rout: za.csv hiv_sim.Rout
@@ -28,6 +28,15 @@ hiv_generations.Rout: za.csv hiv_sim.Rout hiv_generations.R
 ## Not liking the overall attempt; keep just first pic.
 za_gens.Rout: za.csv hiv_sim.Rout za_gens.R
 
+
+######################################################################
+
+## 2020 Feb 20 (Thu) No clear idea what's going on here
+
+
+## model1.plots.Rout: Does not work
+## model1.ws.Rout: Produces no plot
+
 %.plots.Rout: %.sim.Rout plots.R
 	$(run-R)
 %.sim.Rout: simulate.Rout deSolve.R %.R
@@ -36,6 +45,8 @@ za_gens.Rout: za.csv hiv_sim.Rout za_gens.R
 ##################################################################
 
 ## Code to replicate Williams fitting experiments for NTU lecture
+
+model1.ws.Rout:
 
 williams.Rout: williams.R
 

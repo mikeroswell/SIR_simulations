@@ -9,11 +9,11 @@ sir <- function(time, vars, parms){
 	))))
 }
 
-sim <- function(x0=NULL, y0=0.001, R0=5, rho=0.01, finTime=20, timeStep=0.1){
+sim <- function(x0=NULL, y0=0.001, R0=5, rho=0.01, finTime=20, timeStep=0.1, dfun=sir){
 	if(is.null(x0)){x0 <- 1-y0}
 	sim <- as.data.frame(ode(
 		y=c(lx=log(x0), ly=log(y0), cum=0),
-		func=sir,
+		func=dfun,
 		times=seq(from=0, to=finTime, by=timeStep),
 		parms=list(R0=R0, rho=rho)
 	))
