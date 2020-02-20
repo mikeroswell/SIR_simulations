@@ -8,7 +8,6 @@ current: target
 
 ######################################################################
 
-
 ## This was built as a stripped-down, robust simulator while at Princeton (Wilton sojourn). I hijacked it for a couple of things and then moved on. It could still be a good engine, with scaling-related helper functions. I think.
 
 ## See also SIR_model on some wiki
