@@ -12,6 +12,8 @@ current: target
 
 ## This was built as a stripped-down, robust simulator while at Princeton (Wilton sojourn). I hijacked it for a couple of things and then moved on. It could still be a good engine, with scaling-related helper functions. I think.
 
+## But where did I move on to? Where do I actually do SIR sims?? 2022 Apr 03 (Sun)
+
 ## See also SIR_model on some wiki
 
 burnout.plots.Rout.pdf: burnout.R
@@ -20,7 +22,7 @@ Sources += $(wildcard *.R *.csv)
 
 bigEpidemic.Rout: simulate.Rout
 fitSim.Rout: simulate.Rout
-longPlot.Rout: fitSim.Rout
+longPlotRout: fitSim.Rout
 
 hiv_sim.Rout: simulate.Rout
 hiv_plot.Rout: za.csv hiv_sim.Rout
@@ -29,7 +31,6 @@ hiv_generations.Rout: za.csv hiv_sim.Rout hiv_generations.R
 ## In haste for Utah
 ## Not liking the overall attempt; keep just first pic.
 za_gens.Rout: za.csv hiv_sim.Rout za_gens.R
-
 
 ######################################################################
 
@@ -42,6 +43,11 @@ za_gens.Rout: za.csv hiv_sim.Rout za_gens.R
 %.plots.Rout: %.sim.Rout plots.R
 	$(run-R)
 %.sim.Rout: simulate.Rout deSolve.R %.R
+	$(run-R)
+
+## in extreme haste for 3SS2022
+## recurrent.newplots.Rout: newplots.R
+%.newplots.Rout: %.sim.Rout newplots.R
 	$(run-R)
 
 ##################################################################
