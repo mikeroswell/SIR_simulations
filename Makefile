@@ -22,7 +22,7 @@ burnout.plots.Rout.pdf: burnout.R
 
 bigEpidemic.Rout: simulate.Rout
 fitSim.Rout: simulate.Rout
-longPlotRout: fitSim.Rout
+longPlot.Rout: fitSim.Rout
 
 hiv_sim.Rout: simulate.Rout
 hiv_plot.Rout: za.csv hiv_sim.Rout
