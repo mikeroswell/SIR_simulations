@@ -16,9 +16,9 @@ current: target
 
 ## See also SIR_model on some wiki
 
-burnout.plots.Rout.pdf: burnout.R
-
 Sources += $(wildcard *.R *.csv)
+
+burnout.plots.Rout.pdf: burnout.R
 
 bigEpidemic.Rout: simulate.Rout
 fitSim.Rout: simulate.Rout
