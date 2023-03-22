@@ -34,9 +34,6 @@ za_gens.Rout: za.csv hiv_sim.Rout za_gens.R
 
 ######################################################################
 
-## 2020 Feb 20 (Thu) No clear idea what's going on here
-
-
 ## model1.plots.Rout: Does not work
 ## model1.ws.Rout: Produces no plot
 
@@ -47,6 +44,7 @@ za_gens.Rout: za.csv hiv_sim.Rout za_gens.R
 
 ## in extreme haste for 3SS2022
 ## recurrent.newplots.Rout: newplots.R
+## Note that plots does work for burnouts
 %.newplots.Rout: %.sim.Rout newplots.R
 	$(run-R)
 
