@@ -28,7 +28,11 @@ hiv_sim.Rout: simulate.Rout
 hiv_plot.Rout: za.csv hiv_sim.Rout
 hiv_generations.Rout: za.csv hiv_sim.Rout hiv_generations.R
 
-## In haste for Utah
+##
+hiv_long_sim.Rout: simulate.Rout
+hiv_long_plot.Rout: za.csv hiv_long_sim.Rout
+
+## In haste for Utah (shows the match is really good at first)
 ## Not liking the overall attempt; keep just first pic.
 za_gens.Rout: za.csv hiv_sim.Rout za_gens.R
 
