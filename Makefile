@@ -19,6 +19,8 @@ current: target
 Sources += $(wildcard *.R *.csv)
 
 burnout.plots.Rout.pdf: burnout.R
+burnouts.plots.Rout.pdf: burnouts.R
+newPlots.plots.Rout.pdf: newPlots.R
 
 bigEpidemic.Rout: simulate.Rout
 fitSim.Rout: simulate.Rout
