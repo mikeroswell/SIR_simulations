@@ -17,8 +17,7 @@ Sources += $(wildcard *.R *.csv)
 
 autopipeR = defined
 
-burnout.plots.Rout.pdf: burnout.R
-burnouts.plots.Rout.pdf: burnouts.R
+## burnout.plots.Rout.pdf: burnout.R
 newPlots.plots.Rout.pdf: newPlots.R
 
 bigEpidemic.Rout: simulate.rda
@@ -42,9 +41,9 @@ za_gens.Rout: za.csv hiv_sim.rda za_gens.R
 ## model1.plots.Rout: Does not work
 ## model1.ws.Rout: Produces no plot
 
-%.plots.Rout: %.sim.rda plots.R
+%.plots.Rout: plots.R %.sim.rda
 	$(pipeR)
-%.sim.Rout: simulate.Rout deSolve.R %.R
+%.sim.Rout: %.R simulate.rda deSolve.R
 	$(pipeR)
 
 ## in extreme haste for 3SS2022

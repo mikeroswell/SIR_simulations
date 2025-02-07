@@ -1,5 +1,6 @@
 library(shellpipes)
 
+sourceFiles()
 loadEnvironments()
 
 ## Consider changing this number (for some lecture 2025 Feb 07 (Fri))
