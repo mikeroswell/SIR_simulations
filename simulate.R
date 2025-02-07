@@ -1,3 +1,5 @@
+library(shellpipes)
+
 sir <- function(time, vars, parms){
 	x <- with(as.list(vars), exp(lx))
 	y <- with(as.list(vars), exp(ly))
@@ -26,3 +28,4 @@ sim <- function(x0=NULL, y0=0.001, R0=5, rho=0.01, finTime=20, timeStep=0.1, dfu
 		incGen <- inc/timeStep
 	}))
 }
+saveEnvironment()

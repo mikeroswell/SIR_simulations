@@ -1,3 +1,7 @@
+library(shellpipes)
+
+loadEnvironments()
+
 par(cex=1.5)
 
 boxCol <- c("black", "blue", "darkgreen")
