@@ -1,3 +1,7 @@
+library(shellpipes)
+
+sourceFiles()
+loadEnvironments()
 
 slist <- list(
 	sim(R0=3, rho=0)
@@ -5,3 +9,5 @@ slist <- list(
 	, sim(R0=3, rho=0, x0=0.8, finTime=30)
 	, sim(R0=3, rho=0, x0=0.7, finTime=40)
 )
+
+saveEnvironment()

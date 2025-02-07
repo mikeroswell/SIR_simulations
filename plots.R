@@ -1,6 +1,7 @@
 library(shellpipes)
 
 loadEnvironments()
+startGraphics()
 
 par(cex=1.5)
 
