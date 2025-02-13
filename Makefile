@@ -10,7 +10,7 @@ vim_session:
 
 ######################################################################
 
-Sources += README.md notes.md
+Sources += $(wildcard *.md)
 
 Sources += $(wildcard *.R *.csv)
 
@@ -31,9 +31,17 @@ Sources += content.mk
 
 ######################################################################
 
+## See notes in content.mk, and also rule for newplots
+
+%.plots.Rout: plots.R %.sim.rda
+	$(pipeR)
+
+######################################################################
+
 ## Working now on simulating _backwards_; can we get things to match?
 ## Goal is to calculating infectious potential distributions for Roswell-Weitz heterogeneity
 
+## revtest.md
 ## revtest.rev.plots.Rout: revtest.R
 ## revtest.rev.sim.Rout: revtest.R revsim.R
 %.rev.sim.Rout: %.R revsim.rda deSolve.R
@@ -41,12 +49,10 @@ Sources += content.mk
 
 ######################################################################
 
-## See notes in content.mk, and also rule for newplots
+## Now try to do detailed sims that can be used for calculating means and variances of Rc.
 
-%.plots.Rout: plots.R %.sim.rda
-	$(pipeR)
-
-######################################################################
+## forward.md
+## forward.sim.Rout: forward.R
 
 ### Makestuff
 
