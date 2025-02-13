@@ -40,6 +40,7 @@ Sources += content.mk
 
 ## Working now on simulating _backwards_; can we get things to match?
 ## Goal is to calculating infectious potential distributions for Roswell-Weitz heterogeneity
+## This doesn't work as slick as I had hoped, and needs more math I think to be made to work at all.
 
 ## revtest.md
 ## revtest.rev.plots.Rout: revtest.R
@@ -49,10 +50,9 @@ Sources += content.mk
 
 ######################################################################
 
-## Now try to do detailed sims that can be used for calculating means and variances of Rc.
+## Now try to do detailed sims that can be used for calculating means and variances of Rc. Forward version of Roswell-Weitz attack
 
-## forward.md
-## forward.sim.Rout: forward.R
+## forward.sim.Rout: forward.R forward.md
 
 ### Makestuff
 
