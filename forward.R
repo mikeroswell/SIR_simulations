@@ -8,7 +8,7 @@ loadEnvironments()
 ## This robust solver was built without gamma (equivalent to gamma=1), which seems ok if we can remember that
 R0 <- 4
 rho <- 0 # values > 1 give reinfection, at 0 SIRS <-> SIR
-timeStep = 0.1
+
 
 
 ## Make an environment so that I can pass things to mderivs (which is called by deSolve, so I don't know how to pass the normal way).
@@ -81,39 +81,42 @@ oderivs <- function(time, vars, parms){
 }
 
 
-outbreakStats <- function(R0, y0=1e-3
-	, rho=0, tmult=6, cohortProp=0.6, steps=300
-){
-	rate <- (R0-1)/R0
-	finTime <- tmult*(-log(y0))/rate
-	print(finTime)
-	sdat <- sim(R0=R0, rho=rho, timeStep=finTime/steps, y0=y0
-		, finTime=finTime
+outbreakStats <- function(R0
+                          , y0=1e-3
+                          , rho=0
+                          , tmult=6
+                          , cohortProp=0.6
+                          , steps=300
+                           ){
+   	rate <- (R0-1)/R0
+   	finTime <- tmult*(-log(y0))/rate
+   	print(finTime)
+   	sdat <- sim(R0=R0, rho=rho, timeStep=finTime/steps, y0=y0
+                  		, finTime=finTime
+                  	)
+   	mfuns$ifun <- approxfun(sdat$time, sdat$x*sdat$y, rule=2)
+   	cStats <- cohortStats(R0, sdat, cohortProp*finTime)
+   	mfuns$rcfun <- approxfun(cStats$cohort, cStats$Rc, rule=2)
+   	mfuns$varrcfun <- approxfun(cStats$cohort, cStats$varRc, rule=2)
 
-	)
-	mfuns$ifun <- approxfun(sdat$time, sdat$x*sdat$y, rule=2)
-	cStats <- cohortStats(R0, sdat, cohortProp*finTime)
-	mfuns$rcfun <- approxfun(cStats$cohort, cStats$Rc, rule=2)
-	mfuns$varrcfun <- approxfun(cStats$cohort, cStats$varRc, rule=2)
+     	mom <- as.data.frame(ode(
+       		y=c(cum=0, mu=0, SS=0, V=0)
+       		, func=oderivs
+       		, times=sdat$time
+       		, parms=list()
+       	))
 
-	mom <- as.data.frame(ode(
-		y=c(cum=0, mu=0, SS=0, V=0)
-		, func=oderivs
-		, times=sdat$time
-		, parms=list()
-	))
-
-	with(mom[nrow(mom), ], {
-		mu <- mu/cum
-		SS <- SS/cum
-		within <- (V/cum)/mu^2
-		between <- (SS-mu^2)/mu^2
-		total <- within+between
-		return(c(R0=R0, size=R0*cum, mu=mu
-			, within=within, between=between, total=total
-		))
-	})
-}
+       	with(mom[nrow(mom), ], {
+         		mu <- mu/cum
+         		SS <- SS/cum
+         		within <- (V/cum)/mu^2
+         		between <- (SS-mu^2)/mu^2
+         		total <- withinbetween
+         		return(c(R0=R0, size=R0*cum, mu=mu
+                      			, within=within, between=between, total=total
+                      		))
+         	})
+     }
 
 R0 <- c(1.2, 1.5, 2, 4, 8)
 steps <- 3e2
