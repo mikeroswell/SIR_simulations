@@ -1,5 +1,5 @@
 library(shellpipes)
-rpcall("forward.sim.Rout forward.R simulate.rda deSolve.R")
+rpcall("forward.sim.Rout forward.R simulate.rda finalSize.rda deSolve.R")
 library(rlang)
 
 sourceFiles()
