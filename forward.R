@@ -110,9 +110,10 @@ outbreakStats <- function(R0
          		between <- (SS-mu^2)/mu^2
          		total <- within + between
          		aSize <- finalSize(R0)
+         		size <- R0*cum
          		return(c(R0=R0
-         		         , size=R0*cum
-         		         , sizeProp <- size/aSize
+         		         , size=size
+         		         , sizeProp=size/aSize
          		         , mu=mu
          		         , within=within
          		         , between=between
