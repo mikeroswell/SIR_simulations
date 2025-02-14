@@ -74,7 +74,7 @@ oderivs <- function(time, vars, parms){
 	))))
 }
 
-outbreakStats <- function(R0, rho=0, timeStep=0.1, maxCohort=20, buffer=15){
+outbreakStats <- function(R0, rho=0, timeStep=0.1, maxCohort=40, buffer=25){
 	sdat <- sim(R0=R0, rho=rho, timeStep=timeStep
 		, finTime=maxCohort+buffer
 	)
@@ -85,11 +85,19 @@ outbreakStats <- function(R0, rho=0, timeStep=0.1, maxCohort=20, buffer=15){
 
 	mom <- as.data.frame(ode(
 		y=c(cum=0, mu=0, SS=0, V=0)
-		, func=mderivs
-		, times=sdat$times
+		, func=oderivs
+		, times=sdat$time
 		, parms=list()
 	))
-	return(mom)
+	
+	with(mom[nrow(mom), ], {
+		mu <- mu/cum
+		SS <- SS/cum
+		within <- (V/cum)/mu^2
+		between <- (SS-mu^2)/mu^2
+		total <- within+between
+		return(c(within=within, between=between, total=total))
+	})
 }
 
-outbreakStats(4)
+outbreakStats(10)
