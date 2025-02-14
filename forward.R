@@ -78,6 +78,20 @@ oderivs <- function(time, vars, parms){
 	))))
 }
 
+simWrap <- function(R0
+                    , y0=1e-3
+                    , rho=0
+                    , tmult=6
+                    , steps=300){
+  rate <- (R0-1)/R0
+  finTime <- tmult*(-log(y0))/rate
+  print(finTime)
+  sdat <- sim(R0=R0, rho=rho, timeStep=finTime/steps, y0=y0
+              , finTime=finTime
+  )
+  return(sdat)
+}
+
 outbreakStats <- function(R0
                           , y0=1e-3
                           , rho=0
@@ -85,12 +99,7 @@ outbreakStats <- function(R0
                           , cohortProp=0.6
                           , steps=300
                            ){
-   	rate <- (R0-1)/R0
-   	finTime <- tmult*(-log(y0))/rate
-   	print(finTime)
-   	sdat <- sim(R0=R0, rho=rho, timeStep=finTime/steps, y0=y0
-                  		, finTime=finTime
-                  	)
+   	sdat <- simWrap(R0, y0, rho, tmult, steps)
    	ifun <- approxfun(sdat$time, sdat$x*sdat$y, rule=2)
    	cStats <- cohortStats(R0, sdat, cohortProp*finTime)
    	rcfun <- approxfun(cStats$cohort, cStats$Rc, rule=2)
