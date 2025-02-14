@@ -85,11 +85,10 @@ simWrap <- function(R0
                     , steps=300){
   rate <- (R0-1)/R0
   finTime <- tmult*(-log(y0))/rate
-  print(finTime)
   sdat <- sim(R0=R0, rho=rho, timeStep=finTime/steps, y0=y0
               , finTime=finTime
   )
-  return(sdat)
+  return(list(sdat =sdat, finTime =finTime))
 }
 
 outbreakStats <- function(R0
@@ -99,11 +98,12 @@ outbreakStats <- function(R0
                           , cohortProp=0.6
                           , steps=300
                            ){
-   	sdat <- simWrap(R0, y0, rho, tmult, steps)
-   	ifun <- approxfun(sdat$time, sdat$x*sdat$y, rule=2)
-   	cStats <- cohortStats(R0, sdat, cohortProp*finTime)
-   	rcfun <- approxfun(cStats$cohort, cStats$Rc, rule=2)
-   	varrcfun <- approxfun(cStats$cohort, cStats$varRc, rule=2)
+   	mySim<- simWrap(R0, y0, rho, tmult, steps)
+   	with(mySim, {
+     	ifun <- approxfun(sdat$time, sdat$x*sdat$y, rule=2)
+     	cStats <- cohortStats(R0, sdat, cohortProp*finTime)
+     	rcfun <- approxfun(cStats$cohort, cStats$Rc, rule=2)
+     	varrcfun <- approxfun(cStats$cohort, cStats$varRc, rule=2)
 
      	mom <- as.data.frame(ode(
        		y=c(cum=0, mu=0, SS=0, V=0)
@@ -129,7 +129,8 @@ outbreakStats <- function(R0
          		         , total=total
                       		))
          	})
-     }
+   	})
+   	}
 
 R0 <- c(1.2, 1.5, 2, 4, 8)
 steps <- 3e2
