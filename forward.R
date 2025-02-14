@@ -33,7 +33,7 @@ cMoments <- function(time, sfun, T0){
 	mom <- as.data.frame(ode(
 		y=c(Rc=0, cum=0, Rctot=0, RcSS=0)
 		, func=mderivs
-		, times=times
+		, times=time
 		, parms=list(
 			plist=list(T0=T0)
 			, flist=list(sfun=sfun)
@@ -111,9 +111,13 @@ outbreakStats <- function(R0
          		SS <- SS/cum
          		within <- (V/cum)/mu^2
          		between <- (SS-mu^2)/mu^2
-         		total <- withinbetween
-         		return(c(R0=R0, size=R0*cum, mu=mu
-                      			, within=within, between=between, total=total
+         		total <- within + between
+         		return(c(R0=R0
+         		         , size=R0*cum
+         		         , mu=mu
+         		         , within=within
+         		         , between=between
+         		         , total=total
                       		))
          	})
      }
