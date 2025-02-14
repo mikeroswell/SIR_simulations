@@ -9,8 +9,6 @@ loadEnvironments()
 R0 <- 4
 rho <- 0 # values > 1 give reinfection, at 0 SIRS <-> SIR
 
-
-
 ## Make an environment so that I can pass things to mderivs (which is called by deSolve, so I don't know how to pass the normal way).
 ## TODO: See if there is a deSolve solution to pass extra stuff
 
@@ -80,7 +78,6 @@ oderivs <- function(time, vars, parms){
 	))))
 }
 
-
 outbreakStats <- function(R0
                           , y0=1e-3
                           , rho=0
@@ -112,8 +109,10 @@ outbreakStats <- function(R0
          		within <- (V/cum)/mu^2
          		between <- (SS-mu^2)/mu^2
          		total <- within + between
+         		aSize <- finalSize(R0)
          		return(c(R0=R0
          		         , size=R0*cum
+         		         , sizeProp <- size/aSize
          		         , mu=mu
          		         , within=within
          		         , between=between

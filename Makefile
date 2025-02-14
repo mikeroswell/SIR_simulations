@@ -21,9 +21,9 @@ autopipeR = defined
 ## newPlots.plots.Rout: newPlots.R
 
 ## finalSize.R uses uniroot to solve final size equation; might be clunky though
-## finalSize.Rout: finalSize.R
+finalSize.Rout: finalSize.R
 
-%.sim.Rout: %.R simulate.rda deSolve.R
+%.sim.Rout: %.R simulate.rda finalSize.Rda deSolve.R
 	$(pipeRcall)
 
 ######################################################################
