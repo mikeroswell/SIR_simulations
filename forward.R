@@ -57,7 +57,18 @@ cCalc <- function(sdat, cohort, sfun, bet, tol=1e-4){
 	})
 }
 
-cohortStats <- function(R0, sdat, maxCohort){
+cohortStats <- function(R0
+                        , sdat = NULL
+                        , maxCohort = NULL
+                        , cohortProp=0.6
+                        , ...){
+  # figure out error/warning if incompatible combos provided
+  if(is.null(sdat)){mySim <- simWrap(R0)
+    sdat <- mySim$sdat
+    if(is.null(maxCohort)){
+      maxCohort <- mySim$finTime * cohortProp
+   }
+  }
 	sfun <- approxfun(sdat$time, sdat$x, rule=2)
 	cohorts <- with(sdat, time[time<=maxCohort])
 	return(as.data.frame(t(
@@ -132,12 +143,5 @@ outbreakStats <- function(R0
    	})
    	}
 
-R0 <- c(1.2, 1.5, 2, 4, 8)
-steps <- 3e2
-
-print(as.data.frame(t(
-	sapply(R0, function(x) outbreakStats(R0=x, steps=steps))
-)))
-
-# cohortStats(8)
+saveEnvironment()
 
