@@ -66,9 +66,9 @@ cohortStats <- function(R0, sdat, maxCohort){
 }
 
 oderivs <- function(time, vars, parms){
-	inc <- mfuns$ifun(time)
-	Rc <- mfuns$rcfun(time)
-	varRc <- mfuns$varrcfun(time)
+	inc <- parms$flist$ifun(time)
+	Rc <- parms$flist$rcfun(time)
+	varRc <- parms$flist$varrcfun(time)
 
 	return(with(c(parms, vars), list(c(
 		cumdot = inc
@@ -91,16 +91,16 @@ outbreakStats <- function(R0
    	sdat <- sim(R0=R0, rho=rho, timeStep=finTime/steps, y0=y0
                   		, finTime=finTime
                   	)
-   	mfuns$ifun <- approxfun(sdat$time, sdat$x*sdat$y, rule=2)
+   	ifun <- approxfun(sdat$time, sdat$x*sdat$y, rule=2)
    	cStats <- cohortStats(R0, sdat, cohortProp*finTime)
-   	mfuns$rcfun <- approxfun(cStats$cohort, cStats$Rc, rule=2)
-   	mfuns$varrcfun <- approxfun(cStats$cohort, cStats$varRc, rule=2)
+   	rcfun <- approxfun(cStats$cohort, cStats$Rc, rule=2)
+   	varrcfun <- approxfun(cStats$cohort, cStats$varRc, rule=2)
 
      	mom <- as.data.frame(ode(
        		y=c(cum=0, mu=0, SS=0, V=0)
        		, func=oderivs
        		, times=sdat$time
-       		, parms=list()
+       		, parms=list(flist = list(ifun=ifun, rcfun=rcfun, varrcfun=varrcfun))
        	))
 
        	with(mom[nrow(mom), ], {
@@ -128,4 +128,6 @@ steps <- 3e2
 print(as.data.frame(t(
 	sapply(R0, function(x) outbreakStats(R0=x, steps=steps))
 )))
+
+# cohortStats(8)
 
