@@ -1,4 +1,5 @@
 library(shellpipes)
+rpcall("forward.sim.Rout forward.R simulate.rda deSolve.R")
 library(rlang)
 
 sourceFiles()
@@ -6,11 +7,12 @@ loadEnvironments()
 
 ## This robust solver was built without gamma (equivalent to gamma=1), which seems ok if we can remember that
 R0 <- 4
-rho <- 0
+rho <- 0 # values > 1 give reinfection, at 0 SIRS <-> SIR
 timeStep = 0.1
 
 ## Make an environment so that I can pass things to mderivs (which is called by deSolve, so I don't know how to pass the normal way).
 ## TODO: See if there is a deSolve solution to pass extra stuff
+
 mfuns <- env()
 
 ## m for moment; these two functions integrate across the infectors from a given cohort
@@ -25,12 +27,12 @@ mderivs <- function(time, vars, parms){
 	))))
 }
 
-cMoments <- function(times, sfun, T0){
+cMoments <- function(time, sfun, T0){
 	mfuns$sfun <- sfun
 	mom <- as.data.frame(ode(
 		y=c(Rc=0, cum=0, Rctot=0, RcSS=0)
 		, func=mderivs
-		, times=times
+		, time=time
 		, parms=list(T0=T0)
 	))
 	return(mom)
@@ -74,7 +76,14 @@ oderivs <- function(time, vars, parms){
 	))))
 }
 
-outbreakStats <- function(R0, rho=0, timeStep=0.1, maxCohort=20, buffer=15){
+
+outbreakStats <- function(R0
+                          , rho=0
+                          , timeStep=0.05
+                          , maxCohort=20
+                          , buffer=15
+                          , tol=1e-4
+                          ){
 	sdat <- sim(R0=R0, rho=rho, timeStep=timeStep
 		, finTime=maxCohort+buffer
 	)
@@ -85,11 +94,25 @@ outbreakStats <- function(R0, rho=0, timeStep=0.1, maxCohort=20, buffer=15){
 
 	mom <- as.data.frame(ode(
 		y=c(cum=0, mu=0, SS=0, V=0)
-		, func=mderivs
-		, times=sdat$times
+		, func=oderivs
+		, time=sdat$time
 		, parms=list()
 	))
+
+	# with(mom[nrow(mom), ], {
+	#   stopifnot(abs(cum-fin)<tol)
+	#   muTot=mu/cum
+	#   SSTot=SS/cum
+	#   return(list(
+	#     RcEp=zbet*Rctot, varRc=bet^2*(RcSS-Rctot^2)
+	#   ))
+	# })
 	return(mom)
 }
 
-outbreakStats(4)
+
+
+
+out <- outbreakStats(8)
+
+

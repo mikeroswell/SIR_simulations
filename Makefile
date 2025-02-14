@@ -20,8 +20,11 @@ autopipeR = defined
 ## burnout.plots.Rout: burnout.R
 ## newPlots.plots.Rout: newPlots.R
 
+## finalSize.R uses uniroot to solve final size equation; might be clunky though
+## finalSize.Rout: finalSize.R
+
 %.sim.Rout: %.R simulate.rda deSolve.R
-	$(pipeR)
+	$(pipeRcall)
 
 ######################################################################
 
