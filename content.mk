@@ -25,6 +25,8 @@ za_gens.Rout: za.csv hiv_sim.rda za_gens.R
 %.newplots.Rout: %.sim.rda newplots.R
 	$(pipeR)
 
+## git mv newplots.R hastyplots.R
+
 ##################################################################
 
 ## Code to replicate Williams fitting experiments for NTU lecture
