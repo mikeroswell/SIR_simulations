@@ -95,6 +95,12 @@ simWrap <- function(R0
                     , tmult=6
                     , steps=300){
   rate <- (R0-1)/R0
+
+  # (R0-1) = r
+  # (-log(y0)+log((R0-1)/R0))/(R0-1) = timePeak
+  # Right part re-written (log(R0-1)-log(R0))/(R0-1)
+  # still don't see it
+
   finTime <- tmult*(-log(y0))/rate
   sdat <- sim(R0=R0, rho=rho, timeStep=finTime/steps, y0=y0
               , finTime=finTime
