@@ -13,12 +13,14 @@ The shift referred to above concerns two components of the expectation: between-
 
 The current simulation is fairly clunky and we haven't really pushed hard to make it very accurate. There is a clear shift, and a clear tendency for the total deterministic variance to be near 1, but it's not clear so far whether it actually is 1; here is a table from a particular set of simulations.
 
+```
    R0      size  sizeProp        mu    within    between     total
 1 1.2 0.3165041 1.0090289 0.9962284 0.9867169 0.01179603 0.9985129
 2 1.5 0.5828951 1.0001434 0.9975229 0.9392720 0.05841435 0.9976864
 3 2.0 0.7960894 0.9990930 0.9980359 0.8318769 0.16404470 0.9959216
 4 4.0 0.9792088 0.9990178 1.0019024 0.5056483 0.48259317 0.9882415
 5 8.0 0.9986287 0.9989852 1.0288357 0.2779578 0.68743017 0.9653879
+```
 
 sizeProp is just the ratio of the observed-to-expected final size as a sanity check. mu near 1 is also a sanity check and you might notice not super sane.
 
