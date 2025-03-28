@@ -9,7 +9,7 @@ library(purrr)
 library(patchwork)
 
 cohorts <- map_dfr(c(1.2, 1.5, 2, 4, 8), function(R0){
-  return(data.frame(sapply(cohortStats(R0), unlist), R0 = R0))
+  return(data.frame(sapply(cohortStats(R0, steps = 1e3, y0 = 1e-9 ), unlist), R0 = R0))
 }
 )
 

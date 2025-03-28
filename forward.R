@@ -63,7 +63,7 @@ cohortStats <- function(R0
                         , cohortProp=0.6
                         , ...){
   # figure out error/warning if incompatible combos provided
-  if(is.null(sdat)){mySim <- simWrap(R0)
+  if(is.null(sdat)){mySim <- simWrap(R0, ...)
     sdat <- mySim$sdat
     if(is.null(maxCohort)){
       maxCohort <- mySim$finTime * cohortProp
