@@ -139,7 +139,7 @@ outbreakStats <- function(R0
          		size <- R0*cum
          		return(c(R0=R0
          		         , size=size
-         		         , sizeProp=size/aSize
+         		         , sizeRat=size/aSize
          		         , mu=mu
          		         , within=within
          		         , between=between

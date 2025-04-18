@@ -13,7 +13,8 @@ sapply(steps, function(s){
   }
   )
 
+conjectureDat <- as.data.frame(
+  t(sapply(R0, function(x) outbreakStats(R0=x, steps=1e4))))
 
 
-
-
+saveEnvironment()

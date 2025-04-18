@@ -43,4 +43,4 @@ kc <- cohorts |>
         , legend.position.inside = c(0.75, 0.4))
 
 
-rc + kc
+rc + scale_y_continuous(limits = c(0,9), breaks = seq(0,8,2)) + kc + xlim(c(0, 150))
