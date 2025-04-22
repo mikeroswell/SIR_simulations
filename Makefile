@@ -1,4 +1,4 @@
-# This is SIR_simulations
+# This is SIR_simulations, a repo focused on exploring the Roswell conjecture
 
 current: target
 -include target.mk
