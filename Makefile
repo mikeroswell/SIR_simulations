@@ -62,6 +62,10 @@ conjecture.Rout: conjecture.R forward.sim.rda deSolve.R
 plotCohorts.Rout: plotCohorts.R forward.sim.rda deSolve.R
 	$(pipeRcall)
 
+## A set of sharing notes, originally by JD for Parsons
+conjecture.html: conjecture.md
+	$(pandocs)
+
 ######################################################################
 
 ### Makestuff
