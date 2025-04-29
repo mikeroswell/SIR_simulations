@@ -51,7 +51,7 @@ cCalc <- function(sdat, cohort, sfun, bet, tol=1e-4){
 			Rctot=Rctot/cum
 			RcSS=RcSS/cum
 			return(list(
-				cohort=cohort, Rc=bet*Rctot, varRc=bet^2*(RcSS-Rctot^2), RcSS = RcSS
+				cohort=cohort, Rc=bet*Rctot, varRc=bet^2*(RcSS-Rctot^2), RcSS = bet^2*RcSS
 			))
 		})
 	})
@@ -80,7 +80,8 @@ oderivs <- function(time, vars, parms){
 	inc <- parms$flist$ifun(time)
 	Rc <- parms$flist$rcfun(time)
 	varRc <- parms$flist$varrcfun(time)
-	wss <- parms$flist$sswfun(time)
+	wss <- parms$flist$wssfun(time)
+
 
 	return(with(c(parms, vars), list(c(
 		cumdot = inc
@@ -88,6 +89,8 @@ oderivs <- function(time, vars, parms){
 		, SSdot = inc*Rc*Rc
 		, Vdot = inc*varRc
 		, wdot = inc*wss
+		, checkVdot = inc*(wss - Rc^2)
+
 	))))
 }
 
@@ -123,22 +126,24 @@ outbreakStats <- function(R0
      	cStats <- cohortStats(R0, sdat, cohortProp*finTime)
      	rcfun <- approxfun(cStats$cohort, cStats$Rc, rule=2)
      	varrcfun <- approxfun(cStats$cohort, cStats$varRc, rule=2)
-     	sswfun <- approxfun(cStats$cohort, cStats$RcSS, rule = 2)
+      wssfun <- approxfun(cStats$cohort, cStats$RcSS, rule = 2)
 
      	mom <- as.data.frame(ode(
-       		y=c(cum=0, mu=0, SS=0, V=0, ssw = 0)
+       		y=c(cum=0, mu=0, SS=0, V=0, w = 0, checkV = 0)
        		, func=oderivs
        		, times=sdat$time
-       		, parms=list(flist = list(ifun=ifun, rcfun=rcfun, varrcfun=varrcfun, sswfun = sswfun ))
+       		, parms=list(flist = list(ifun=ifun, rcfun=rcfun, varrcfun=varrcfun, wssfun = wssfun ))
        	))
 
        	with(mom[nrow(mom), ], {
          		mu <- mu/cum
          		SS <- SS/cum
-         		win2 <- ssw/cum
+         		w <- w/cum
+         		checkV <- (checkV/cum)/mu^2
          		within <- (V/cum)/mu^2
          		between <- (SS-mu^2)/mu^2
-         		total <- within + between
+         		total = within + between
+         		otherCheck = (w-mu^2)/mu^2
          		aSize <- finalSize(R0)
          		size <- R0*cum
          		return(c(R0=R0
@@ -146,9 +151,11 @@ outbreakStats <- function(R0
          		         , sizeRat=size/aSize
          		         , mu=mu
          		         , within=within
-         		         , win2 = win2
+         		         , checkV = checkV
+         		         , michael = w - mu^2
          		         , between=between
          		         , total=total
+         		         , otherCheck = otherCheck
                       		))
          	})
    	})
