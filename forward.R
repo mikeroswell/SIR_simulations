@@ -150,12 +150,15 @@ outbreakStats <- function(R0
          		         , size=size
          		         , sizeRat=size/aSize
          		         , mu=mu
+         		         , mu2 = mu^2
          		         , within=within
-         		         , checkV = checkV
-         		         , michael = w - mu^2
+         		         , checkWithin = checkV
          		         , between=between
-         		         , total=total
-         		         , otherCheck = otherCheck
+         		         , withinSS = w
+         		         , simplifiedTotalV = w - mu^2
+         		         , totalV = total*mu^2
+         		         , totalK=total
+         		         , simplifiedTotalK = otherCheck
                       		))
          	})
    	})

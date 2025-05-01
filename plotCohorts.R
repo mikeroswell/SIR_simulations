@@ -33,8 +33,7 @@ rc <- cohorts |> ggplot(aes(cohort, Rc, color = as.factor(R0))) +
 #         )
 
 ssc <- cohorts |>
-  mutate(kappa_c = varRc/Rc^2) |>
-  ggplot(aes(cohort, kappa_c, color = as.factor(R0))) +
+  ggplot(aes(cohort, RcSS, color = as.factor(R0))) +
   geom_line(linewidth = 1, alpha = 0.8) +
   theme_classic() +
   scale_color_viridis_d(name = "R_0") +
