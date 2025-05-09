@@ -32,6 +32,15 @@ rc <- cohorts |> ggplot(aes(cohort, Rc, color = as.factor(R0))) +
 #         # , legend.position.inside = c(0.75, 0.4)
 #         )
 
+ssc <- cohorts |>
+  ggplot(aes(cohort, RcSS, color = as.factor(R0))) +
+  geom_line(linewidth = 1, alpha = 0.8) +
+  theme_classic() +
+  scale_color_viridis_d(name = "R_0") +
+  theme(legend.position = "inside"
+        , legend.position.inside = c(0.75, 0.4))
+
+
 
 kc <- cohorts |>
   mutate(kappa_c = varRc/Rc^2) |>
