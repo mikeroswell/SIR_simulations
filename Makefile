@@ -62,6 +62,9 @@ conjecture.Rout: conjecture.R forward.sim.rda deSolve.R
 boxCarConjecture.Rout: boxCarConjecture.R forward.sim.rda deSolve.R
 	$(pipeRcall)
 
+boxDown.Rout: boxDown.R boxCarConjecture.rda
+	$(pipeR)
+
 plotCohorts.Rout: plotCohorts.R forward.sim.rda deSolve.R
 	$(pipeRcall)
 

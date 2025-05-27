@@ -11,7 +11,6 @@ sir <- function(time, vars, parms){
 	))))
 }
 
-
 boxcar <- function(time, vars, parms){
   with(as.list(c(vars, parms)), {
     x <- exp(lx)
@@ -19,7 +18,7 @@ boxcar <- function(time, vars, parms){
     yvec <- exp(unlist(mget(paste0("ly", 1:cars))))
     y <- sum(yvec)
     lydots <- numeric(cars)
-    lydots[1] <- R0*x - cars *yvec[1]
+    lydots[[1]] <- R0*x*y/y[[1]] - cars*yvec[[1]]
     lxdot <- rho*(1-x)/x - R0*y
     cumdot <- R0*x*y
     if (cars > 1) {
