@@ -1,4 +1,4 @@
-# This is SIR_simulations
+# This is SIR_simulations (Roswell's updated version)
 
 current: target
 -include target.mk
