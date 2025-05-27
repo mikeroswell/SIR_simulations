@@ -59,6 +59,9 @@ Sources += content.mk
 conjecture.Rout: conjecture.R forward.sim.rda deSolve.R
 	$(pipeRcall)
 
+boxCarConjecture.Rout: boxCarConjecture.R forward.sim.rda deSolve.R
+	$(pipeRcall)
+
 plotCohorts.Rout: plotCohorts.R forward.sim.rda deSolve.R
 	$(pipeRcall)
 
