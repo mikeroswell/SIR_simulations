@@ -18,11 +18,11 @@ boxcar <- function(time, vars, parms){
     yvec <- exp(unlist(mget(paste0("ly", 1:cars))))
     y <- sum(yvec)
     lydots <- numeric(cars)
-    lydots[[1]] <- R0*x*y/y[[1]] - cars*yvec[[1]]
+    lydots[[1]] <- R0*x*y/yvec[[1]] - cars
     lxdot <- rho*(1-x)/x - R0*y
     cumdot <- R0*x*y
     if (cars > 1) {
-      lydots[2:cars] <- cars * (yvec[1:(cars - 1)] - yvec[2:cars])
+      lydots[2:cars] <- cars * (yvec[1:(cars - 1)] / yvec[2:cars] - 1)
     }
     out <- c(lxdot, lydots, cumdot)
     names(out) <- c("lxdot", paste0("ly", 1:cars, "dot"), "cumdot")
@@ -33,13 +33,20 @@ boxcar <- function(time, vars, parms){
 
 sim <- function(x0=NULL, y0=0.001, R0=5, rho=0.01, cars = 1, finTime=20, timeStep=0.1, dfun=boxcar){
 	if(is.null(x0)){x0 <- 1-y0}
-  logy <- rep(-Inf, cars)
-  logy[1] <- log(y0)
+  # previous version: had problems with 0
+#   logy <- rep(-Inf, cars)
+#   logy[1] <- log(y0)
+  # try again with tiny values?
+  init_ly <- log(c(y0, rep(1e-12, cars - 1)))
+  names(init_ly) <- paste0("ly", 1:cars)
+
+  y_init <- c(lx = log(x0), init_ly, cum = 0)
 	sim <- as.data.frame(ode(
-		y=c(lx=log(x0), setNames(logy, paste0("ly", 1:cars)), cum = 0),
-		func=dfun,
-		times=seq(from=0, to=finTime, by=timeStep),
-		parms=list(R0=R0, rho=rho, cars = cars)
+		#y=c(lx=log(x0), setNames(logy, paste0("ly", 1:cars)), cum = 0),
+		y = y_init
+	  , func=dfun
+		, times=seq(from=0, to=finTime, by=timeStep)
+		, parms=list(R0=R0, rho=rho, cars = cars)
 	))
 
 	return(within(sim, {

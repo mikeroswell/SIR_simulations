@@ -156,8 +156,8 @@ outbreakStats <- function(R0
          		return(c(R0=R0
          		         , size=size
          		         , sizeRat=size/aSize
-         		         , mu=mu
          		         , cars = cars
+         		         , mu=mu
          		         , mu2 = mu^2
          		         , within=within
          		         , checkWithin = checkV

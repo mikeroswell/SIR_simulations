@@ -5,8 +5,10 @@ sourceFiles()
 loadEnvironments()
 R0 <- c(1.2, 1.5, 2, 4, 8, 20, 25)
 R0 <- c(1.6)
-steps <- c(1e4)
+
 steps <- c(1e3)
+steps <- c(5e4)
+
 cars <- c(1:6)
 cars <- c(3)
 
