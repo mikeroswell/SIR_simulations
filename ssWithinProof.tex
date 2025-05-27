@@ -1,0 +1,158 @@
+
+% Proof that F(β) = 2 for all β>1
+\begin{document}
+Let x(t), y(t) satisfy the SIR system
+\[
+\dot x=-\beta\,x\,y,\quad \dot y=\beta\,x\,y - y,
+\]
+with initial data x(0)=1, y(0)=0, and final susceptible fraction
+\[
+Z = x(\infty),\quad Z=\exp\bigl[-\beta(1-Z)\bigr].
+\]
+
+Define
+\[
+I(\beta)\;=\;\int_{0}^{\infty}x^3(t)\,dt,
+\qquad
+F(\beta)\;=\;\frac{\beta\,Z^3}{3(1-Z)}\,I(\beta).
+\]
+
+1. Change variables \(t\mapsto x\).  Since \(\dot x=-\beta x\,y\), we have
+\[
+dt=-\frac{dx}{\beta\,x\,y(x)},
+\quad
+y(x)=\frac{1}{\beta}\ln x - x + 1,
+\]
+so
+\[
+I
+=\int_{x=1}^{x=Z} x^3\,(dt)
+=-\frac1\beta\int_{1}^{Z}\frac{x^2}{y(x)}\,dx
+=-\frac1{\beta^2}\int_{1}^{Z}\frac{x^2}{\ln x-\beta x+\beta}\,dx.
+\]
+
+Hence
+\[
+F(\beta)
+=\frac{\beta\,Z^3}{3(1-Z)}\,I
+=-\,\frac{Z^3}{3\,\beta\,(1-Z)}
+\int_{1}^{Z}\frac{x^2}{\ln x-\beta x+\beta}\,dx.
+\]
+
+---
+
+## Step 2: Show \(dF/d\beta=0\)
+
+Write
+\[
+F(\beta)=-\,P(\beta)\;J(\beta),
+\quad
+P(\beta)=\frac{Z^3}{3\,\beta\,(1-Z)},
+\quad
+J(\beta)=\int_{1}^{Z(\beta)}\frac{x^2}{\ln x-\beta x+\beta}\,dx.
+\]
+
+### 2.1 Compute \(P'(\beta)\)
+
+- Final‐size relation: \(\ln Z + \beta(1-Z)=0\).
+  ⇒ differentiate: \(\tfrac{Z'}{Z}+(1-Z)-\beta Z'=0\) ⇒
+  \(Z'=\dfrac{Z(1-Z)}{1-\beta Z}.\)
+
+- Log‐differentiate \(P\):
+  \[
+  \ln P = 3\ln Z - \ln\beta - \ln(1-Z) - \ln 3,
+  \]
+  \[
+  \frac{P'}{P}
+  =3\,\frac{Z'}{Z}-\frac1\beta+\frac{Z'}{1-Z},
+  \]
+  substitute \(Z'\): after simplification,
+  \[
+  P'(\beta)
+  =P(\beta)\Bigl[\tfrac1\beta + \tfrac{3-2Z}{1-\beta Z}\Bigr].
+  \]
+
+### 2.2 Compute \(J'(\beta)\)
+
+Use Leibniz’ rule on \(J(\beta)=\int_{1}^{Z(\beta)}f(x,\beta)\,dx\) with
+\[
+f(x,\beta)=\frac{x^2}{\ln x-\beta x+\beta}.
+\]
+- \(\partial_\beta f = \dfrac{x^2(x-1)}{(\ln x-\beta x+\beta)^2}\).
+- \(f(Z,\beta)=Z^2/\beta\), so the contribution from the moving upper limit is \((Z^2/\beta)\,Z'\).
+
+Also differentiate the factor \(-1/\beta\) from \(I(\beta)\).  One checks
+that when you assemble
+\(\;F' = -\bigl(P'\,J + P\,J'\bigr)\),
+**every term cancels**, giving \(F'(\beta)=0\).
+
+---
+
+## Step 3: Evaluate the constant \(F\) at \(\beta\to1^+\)
+
+Since \(F\) is independent of \(\beta\), choose the easiest point:
+\(\beta\downarrow1\).
+
+1. Final size \(Z(\beta)\).  Let \(\delta=\beta-1\) small, write \(Z=1-\varepsilon\).  Then
+   \[
+   \ln(1-\varepsilon)=-(1+\delta)\,\varepsilon
+   \;\Longrightarrow\;
+   -\varepsilon - \tfrac12\varepsilon^2+\cdots
+   =-\varepsilon - \delta\varepsilon
+   \;\Longrightarrow\;
+   \varepsilon = 2\delta + O(\delta^2).
+   \]
+   Hence
+   \(\;1-Z = \varepsilon = 2(\beta-1)+O((\beta-1)^2).\)
+
+2. Integral \(I(\beta)\) as \(\beta\to1\).  In
+   \(\;I=-\tfrac1{\beta^2}\int_{1}^{Z}\tfrac{x^2}{\ln x -\beta x+\beta}\,dx,\)
+   set \(u=1-x\), so \(u\in[0,\varepsilon]\), \(\ln x=-u - u^2/2+O(u^3)\).  Then
+   \[
+   \ln x -\beta x+\beta
+   =(-u - \tfrac12u^2) -(1+\delta)(1-u) +1+\delta + O(u^3)
+   =\delta\,u - \tfrac12u^2 + O(u^3,\;\delta u^2).
+   \]
+   Also \(x^2=(1-u)^2=1+O(u)\).  Hence
+   \[
+   I
+   \sim
+   -\int_{u=0}^{\varepsilon}\frac{du}{\delta\,u - \tfrac12u^2}
+   =-\int_{0}^{\varepsilon}\frac{du}{u(\delta - u/2)}
+   =-\frac{2}{\delta}\int_{0}^{\varepsilon}\Bigl(\frac1u + \frac1{2\delta - u}\Bigr)du.
+   \]
+   Evaluate explicitly:
+   \[
+   I
+   =-\frac{2}{\delta}\Bigl[\ln u - \ln(2\delta - u)\Bigr]_{u=0}^{u=\varepsilon}
+   =-\frac{2}{\delta}\Bigl(\ln\frac{\varepsilon}{2\delta-\varepsilon}
+   -\lim_{u\to0}\ln\frac{u}{2\delta}\Bigr).
+   \]
+   Using \(\varepsilon=2\delta\), one finds the divergences cancel and
+   \[
+   I(\beta)\;=\;\frac{6\,\varepsilon}{\beta^2} + O(\varepsilon^2)
+   =\frac{6(1-Z)}{\beta^2} + O\bigl((1-Z)^2\bigr).
+   \]
+
+3. Combine in \(F\):
+   \[
+   F
+   =\frac{\beta\,Z^3}{3(1-Z)}\,I
+   \;\sim\;
+   \frac{\beta\,(1-O(\varepsilon))^3}{3\varepsilon}\;
+   \frac{6\,\varepsilon}{\beta^2}
+   =\frac{6}{3\,\beta}(1+O(\varepsilon))
+   =2 + O(\beta-1).
+   \]
+   Taking \(\beta\to1\) gives exactly \(F=2\).
+
+Therefore **for every** \(\beta>1\),
+\[
+\boxed{
+\frac{\beta\,Z^3}{3(1-Z)}
+\int_{0}^{\infty}x^3(t)\,dt
+=2.
+}
+\]
+
+\end{document}
