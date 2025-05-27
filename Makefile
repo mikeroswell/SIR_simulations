@@ -1,4 +1,5 @@
-# This is SIR_simulations (Roswell's updated version)
+# This is Dushoff's rho branch of SIR_simulations (Roswell's updated version)
+# You probably want the master branch instead
 
 current: target
 -include target.mk
