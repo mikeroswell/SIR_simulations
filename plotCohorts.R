@@ -2,12 +2,14 @@ library(shellpipes)
 rpcall("plotCohorts.Rout plotCohorts.R forward.sim.rda deSolve.R")
 loadEnvironments()
 sourceFiles()
-startGraphics(height = 4, width = 7)
+startGraphics(height = 3.5, width = 7)
 library(ggplot2)
 library(dplyr)
 library(purrr)
 library(patchwork)
+ggplot2::theme_set(theme_classic(base_family = "CMU Serif"))
 RO <- c(1.2, 2, 8)
+RO <- c(2, 4, 8)
 
 cohorts <- map_dfr(RO, function(R0){
   return(data.frame(sapply(cohortStats(R0, steps = 1e4, y0 = 1e-9, cars = 1), unlist), R0 = R0))
@@ -21,7 +23,7 @@ straightSim <- map_dfr(RO, function(R0){
 
 rc <- cohorts |> ggplot(aes(cohort, Rc, color = as.factor(R0))) +
   geom_hline(yintercept = 1) +
-  geom_line(linewidth = 1.5, alpha = 1) +
+  geom_line(linewidth = 1.5, alpha = 1, lineend = "round", linejoin = "round") +
   theme_classic() +
   scale_color_viridis_d(name = "R_0") +
   # geom_line(alpha = 0.5
@@ -47,7 +49,7 @@ rc <- cohorts |> ggplot(aes(cohort, Rc, color = as.factor(R0))) +
 
 ssc <- cohorts |>
   ggplot(aes(cohort, RcSS, color = as.factor(R0))) +
-  geom_line(linewidth = 1.3, alpha = 0.8) +
+  geom_line(linewidth = 1.3, alpha = 0.8, lineend = "round", linejoin = "round") +
   theme_classic() +
   scale_color_viridis_d(name = "R_0") +
   theme(legend.position = "inside"
@@ -58,7 +60,7 @@ ssc <- cohorts |>
 kc <- cohorts |>
   mutate(kappa_c = varRc/Rc^2) |>
   ggplot(aes(cohort, kappa_c, color = as.factor(R0))) +
-  geom_line(linewidth = 1.3, alpha = 0.8) +
+  geom_line(linewidth = 1.3, alpha = 0.8, lineend = "round", linejoin = "round") +
   theme_classic() +
   scale_color_viridis_d(name = "R_0") +
   theme(legend.position = "inside"
@@ -71,7 +73,7 @@ epiPlot  <- straightSim |>
   # geom_line(color = "black")+
   # geom_line(aes(y = sdat.x), color = "black") +
   # geom_line(aes(y = sdat.y), color = "black") +
-  geom_line(linewidth = 1.3)+ #, color = "red")+
+  geom_line(linewidth = 1.3, lineend = "round", linejoin = "round")+ #, color = "red")+
   #geom_line(aes(y = sdat.cum), linewidth = 0.7, color = "darkorange") +
   # geom_line(aes(y = sdat.y), linewidth = 0.7, color = "darkred") +
   # facet_wrap(~R0, scales = "free_x") +
@@ -99,6 +101,14 @@ RePlot <- straightSim |> mutate(Re = R0*sdat.x) |>
   theme_classic()
 
 
-epiPlot + rc + kc + guides(color = "none") + xlim(c(0, 150)) + plot_annotation(tag_levels ="a")
+epiPlot + xlim(c(0,35)) + scale_color_manual(values = c(rgb(red = 0.8,  green = 0.8, blue= 0.8), rgb(red = 0.4,  green = 0.4, blue= 0.4), rgb(red =0,green = 0,  blue=0))) +
+  rc + xlim(c(0,35)) + scale_color_manual(values = c(rgb(red = 0.8,  green = 0.8, blue= 0.8), rgb(red = 0.4,  green = 0.4, blue= 0.4), rgb(red =0,green = 0,  blue=0))) +
+  kc + xlim(c(0,35)) + scale_color_manual(values = c(rgb(red = 0.8,  green = 0.8, blue= 0.8), rgb(red = 0.4,  green = 0.4, blue= 0.4), rgb(red =0,green = 0,  blue=0))) + guides(color = "none")  + plot_annotation(tag_levels ="a")
 
 saveEnvironment()
+
+# for Tapan
+# Squish x axis (to x = 40ish)
+# plots for 2, 4, 8, and also one for 1.2
+# Greyscale RGBs: 0,0,0 (r0=8); 0.4*255,, 0.8*255 (r0=2)
+# Latex print (Times New Roman ish)
